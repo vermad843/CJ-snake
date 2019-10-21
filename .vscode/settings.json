@@ -1,0 +1,5 @@
+{
+    "svn.ignoreMissingSvnWarning": true,
+    "vscode.tsc.compiler.alertTSConfigChanges": "never",
+    "git.ignoreLimitWarning": true
+}
