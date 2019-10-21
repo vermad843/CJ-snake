@@ -23,14 +23,31 @@ class App extends Component {
       apple : {
        row : Math.floor(Math.random() * 20),
        col : Math.floor(Math.random() * 20)       
+      },
+      snake : {
+        head : {
+          row : 9,
+          col : 9
+        }
       }
     }
   }
 
+  isApple(cell) {
+    const{apple} = this.state;
+  return   apple.row ===cell.row 
+    && apple.col === cell.col
+  }
+
+  isHead(cell) {
+    const{snake} = this.state;
+  return  snake.head.row ===cell.row 
+    && snake.head.col === cell.col
+  }
 
 
   render() {
-    const { grid, apple } = this.state;
+    const { grid } = this.state;
     return (
       <div className = "App">
         {
@@ -40,9 +57,10 @@ class App extends Component {
                return row.map(cell => {
                  return <div key ={`${cell.row} ${cell.col}`}
                   className = {`cell
-                    ${apple.row ===cell.row 
-                   && apple.col === cell.col
-                   ? 'apple' : ''} `}>
+                    ${
+                      this.isApple(cell)
+                      ? 'apple' : this.isHead(cell)
+                      ? 'head' : ''  }`}>
                 </div>
               })
             })
