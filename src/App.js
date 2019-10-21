@@ -21,8 +21,8 @@ class App extends Component {
     this.state = {
       grid,
       apple : {
-       row : 9 ,
-       col : 9        
+       row : Math.floor(Math.random() * 20),
+       col : Math.floor(Math.random() * 20)       
       }
     }
   }
@@ -30,7 +30,7 @@ class App extends Component {
 
 
   render() {
-    const { grid,apple } = this.state;
+    const { grid, apple } = this.state;
     return (
       <div className = "App">
         {
@@ -40,9 +40,9 @@ class App extends Component {
                return row.map(cell => {
                  return <div key ={`${cell.row} ${cell.col}`}
                   className = {`cell
-                 ${apple.row ===cell.row 
-                 && apple.col === cell.col
-                 ? 'apple' : ''}`}>
+                    ${apple.row ===cell.row 
+                   && apple.col === cell.col
+                   ? 'apple' : ''} `}>
                 </div>
               })
             })
