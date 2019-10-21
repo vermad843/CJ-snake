@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import './App.css';
 
 class App extends Component {
   constructor()  {
@@ -17,19 +17,30 @@ class App extends Component {
       grid.push(cols);   
     }
 
-    this.state = {
-      grid
-    }
+    console.log(grid);
 
+    this.state = {
+      grid,
+    }
   }
+
   render() {
+    const { grid } = this.state;
     return (
       <div className = "App">
+        {
          <section className = "grid">
-           {
+            {
+              grid.map((row, i) => (
+               row.map(cell => (
+                 <div key = {`${cell.row} ${cell.col}`} className = {`cell`}>
 
-           }
+                </div>
+               ))
+              ))
+            }
          </section>
+        }
       </div>
     );
   }
