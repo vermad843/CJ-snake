@@ -12,33 +12,41 @@ class App extends Component {
          cols.push({
            row,
            col
-         })        
+         });        
       }   
       grid.push(cols);   
     }
 
-    console.log(grid);
 
     this.state = {
       grid,
+      apple : {
+       row : 9 ,
+       col : 9        
+      }
     }
   }
 
+
+
   render() {
-    const { grid } = this.state;
+    const { grid,apple } = this.state;
     return (
       <div className = "App">
         {
          <section className = "grid">
             {
-              grid.map((row, i) => (
-               row.map(cell => (
-                 <div key = {`${cell.row} ${cell.col}`} className = {`cell`}>
-
+              grid.map((row, i) => {
+               return row.map(cell => {
+                 return <div key ={`${cell.row} ${cell.col}`}
+                  className = {`cell
+                 ${apple.row ===cell.row 
+                 && apple.col === cell.col
+                 ? 'apple' : ''}`}>
                 </div>
-               ))
-              ))
-            }
+              })
+            })
+          }
          </section>
         }
       </div>
