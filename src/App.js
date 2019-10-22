@@ -20,6 +20,7 @@ class App extends Component {
 
     this.state = {
       grid,
+      direction : 'RIGHT',
       apple : {
        row : Math.floor(Math.random() * 20),
        col : Math.floor(Math.random() * 20)       
@@ -29,21 +30,44 @@ class App extends Component {
           row : 9,
           col : 9
         }
-      }
-    }
+      },
+  };
+  }
+  componentDidMount()  {
+    document.onkeydown = this.onKeyDown;
   }
 
-  isApple(cell) {
+  onKeyDown = (e) => {
+    e = e || window.event;
+    switch(e.keyCode) {
+      case 38:
+        this.setState({direction : 'UP'});
+        break;
+      case 40:
+       this.setState({direction : 'DOWN'});
+       break;
+      case 37:
+       this.setState({direction : 'LEFT'});
+       break;
+      case 39:
+       this.setState({direction : 'RIGHT'}); 
+       break;
+    }
+  };
+  
+   
+  isApple = (cell) => {
     const{apple} = this.state;
   return   apple.row ===cell.row 
     && apple.col === cell.col
   }
 
-  isHead(cell) {
+  isHead = (cell) => {
     const{snake} = this.state;
   return  snake.head.row ===cell.row 
     && snake.head.col === cell.col
   }
+
 
 
   render() {
