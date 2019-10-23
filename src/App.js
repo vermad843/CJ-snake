@@ -69,7 +69,8 @@ class App extends Component {
 
      return nextState;
    },() => {
-     if(this.isOffEdge()) {
+      const {snake} = this.state;
+      if(this.isOffEdge() || this.isTail(snake.head)) {
        this.setState({
          gameOver :true,
        });
