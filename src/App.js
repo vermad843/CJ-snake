@@ -30,6 +30,7 @@ class App extends Component {
           x : 1,                          //when game starts it goes to the right
           y : 0
         },
+        tail : []
       }
     }
   }
@@ -46,6 +47,8 @@ class App extends Component {
   })
 
  gameLoop = () => {
+   if(this.state.gameOver) return;
+
    this.setState(({snake}) => {
      const nextState = {
        snake : {
@@ -57,10 +60,29 @@ class App extends Component {
        },
      };
      return nextState;
+   },() => {
+     if(this.isOffEdge()) {
+       this.setState({
+         gameOver :true,
+       });
+       return;
+     }
    });
    setTimeout(() => {
     this.gameLoop()
   }, 1000)
+ }
+
+
+ isOffEdge = () => {
+   const { snake } =this.state;
+
+   if(snake.head.col > 19
+    || snake.head.col < 0
+    || snake.head.row > 19
+    || snake.head.row< 0) {
+      return true;
+    }
  }
  
   isApple = (cell) => {
@@ -122,11 +144,13 @@ class App extends Component {
 
 
   render() {
-    const { grid } = this.state;
+    const { grid,snake,gameOver } = this.state;
     return (
-      <div onKeyPress = {this.setVelocity } className = "App">
-        {
-         <section className = "grid">
+      <div  className = "App">
+        {  
+          gameOver 
+          ? <h1>Game Over! You scored {snake.tail.length + 1}!</h1>
+          : <section className = "grid">
             {
               grid.map((row, i) => {
                return row.map(cell => {
