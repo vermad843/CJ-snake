@@ -41,7 +41,7 @@ class App extends Component {
     });
     setTimeout(() => {
       this.gameLoop()
-    }, 1000);
+    }, this.state.snake.tail.length ? (400 / this.state.snake.tail.length) + 200 : 400);
   }
 
   getRandomApple = () => ({
@@ -79,7 +79,7 @@ class App extends Component {
    });
    setTimeout(() => {
     this.gameLoop()
-  }, 1000)
+  }, this.state.snake.tail.length ? (400 / this.state.snake.tail.length) + 200 : 400);
  }
 
 
@@ -169,7 +169,7 @@ class App extends Component {
 
 
   render() {
-    const { grid,snake,gameOver } = this.state;
+    const { grid, snake, gameOver } = this.state;
     return (
       <div  className = "App">
         {  
