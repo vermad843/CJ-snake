@@ -20,7 +20,10 @@ class App extends Component {
 
     this.state = {
       grid,
-      apple : this.getRandomApple(),
+      apple : {
+        row: Math.floor(Math.random() * 20),
+        col: Math.floor(Math.random() * 20),
+      }, 
       snake : {
         head : {
           row : 9,
@@ -44,10 +47,22 @@ class App extends Component {
     }, this.state.snake.tail.length ? (400 / this.state.snake.tail.length) + 200 : 400);
   }
 
-  getRandomApple = () => ({
-    row : Math.floor(Math.random() * 20),
-    col : Math.floor(Math.random() * 20),   
-  })
+  getRandomApple = () => {
+    const {snake} = this.state;
+    const newApple = {
+      row : Math.floor(Math.random() * 20),
+      col : Math.floor(Math.random() * 20), 
+    };
+    if(this.isTail(newApple) || (
+      snake.head.row === newApple.row
+      && snake.head.col === newApple.col)) {
+        return this.getRandomApple();
+      }else {
+        return newApple;
+      }
+  }
+   
+
 
  gameLoop = () => {
    if(this.state.gameOver) return;
