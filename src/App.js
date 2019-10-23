@@ -52,7 +52,8 @@ class App extends Component {
  gameLoop = () => {
    if(this.state.gameOver) return;
 
-   this.setState(({snake}) => {
+   this.setState(({snake, apple}) => {
+    const collidesWithApple = this.collidesWithApple();
      const nextState = {
        snake : {
          ...snake,
@@ -61,7 +62,10 @@ class App extends Component {
            col : snake.head.col + snake.velocity.x
          },
        },
+       apple: collidesWithApple ? this.getRandomApple() : apple
      };
+     if (!collidesWithApple) nextState.snake.tail.pop();
+
      return nextState;
    },() => {
      if(this.isOffEdge()) {
@@ -88,6 +92,14 @@ class App extends Component {
     }
  }
  
+ collidesWithApple = () => {
+  const { apple, snake } = this.state;
+  return apple.row === snake.head.row
+    && apple.col === snake.head.col;
+}
+
+
+
   isApple = (cell) => {
     const{apple} = this.state;
   return   apple.row ===cell.row  
@@ -100,6 +112,7 @@ class App extends Component {
     && snake.head.col === cell.col
   }
 
+ 
   
   setVelocity = (event) => {
     if (event.keyCode === 38) { // up
@@ -162,7 +175,9 @@ class App extends Component {
                     ${
                       this.isHead(cell)
                       ? 'head' : this.isApple(cell)
-                      ? 'apple' : ''  }`}>
+                      ? 'apple' : ''  
+                      }`
+                    }>
                 </div>
               })
             })
