@@ -36,6 +36,9 @@ class App extends Component {
   }
 
   componentDidMount = () => {
+    document.addEventListener('keydown', (e) => {
+      this.setVelocity(e);
+    });
     setTimeout(() => {
       this.gameLoop()
     }, 1000);
