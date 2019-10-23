@@ -61,6 +61,7 @@ class App extends Component {
            row : snake.head.row + snake.velocity.y,
            col : snake.head.col + snake.velocity.x
          },
+         tail: [snake.head, ...snake.tail]
        },
        apple: collidesWithApple ? this.getRandomApple() : apple
      };
@@ -111,6 +112,13 @@ class App extends Component {
   return  snake.head.row ===cell.row 
     && snake.head.col === cell.col
   }
+
+  isTail = (cell) => {
+    const { snake } = this.state;
+    return snake.tail.find(inTail => inTail.row === cell.row && inTail.col === cell.col);
+  }
+
+  
 
  
   
@@ -175,7 +183,8 @@ class App extends Component {
                     ${
                       this.isHead(cell)
                       ? 'head' : this.isApple(cell)
-                      ? 'apple' : ''  
+                      ? 'apple' : this.isTail(cell)
+                      ?  'tail' : '' 
                       }`
                     }>
                 </div>
